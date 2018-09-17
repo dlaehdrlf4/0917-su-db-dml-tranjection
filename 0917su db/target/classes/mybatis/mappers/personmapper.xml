@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="person">
+
+<select id="list" resultType="PersonVO">
+	select id,pw,name,phone from person
+	<!-- 실렉트 타입을 다저장할수 있는 거를 저장 resultType 
+	where 절이 없기 때문에 parameterType은 생략한다.-->
+	</select>
+	
+	<!-- person 테이블에서 id를 가지고 데이터를 조회하는 sql -->
+	<select id ="select"
+	resultType="PersonVO" parameterType="java.lang.String">
+	select *
+	from person
+	where id=#{id}
+	</select> 
+	
+	<!-- 테이블을 삽입하는 SQL -->
+	<insert id="insert" parameterType="PersonVO">
+		insert into person values(#{id}, #{pw}, #{name}, #{phone})
+	</insert>
+	
+	<!-- 데이터를 삽입하는 프로시저를 실행하는 구문 -->
+	<insert id = "insertproc" parameterType="PersonVO" statementType="CALLABLE">
+		{
+			call insertmyuser(#{id}, #{pw}, #{name}, #{phone})
+		}
+	</insert>
+	
+	
+	
+	
+</mapper>
